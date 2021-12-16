@@ -28,8 +28,11 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true,
-    authEndpoint: 'broadcasting/auth'
+    wsHost:'127.0.0.1',
+    wsPort:'6001',
+    forceTLS: false,
+    authEndpoint: 'broadcasting/auth',
+    disableStats:false,
 
 });
 
