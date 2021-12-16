@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+
+class GreetingSent implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    protected $user;
+    public $message;
+
+
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct(User $user,$message)
+    {
+        $this->user = $user;
+        $this->message = $message;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        // Log::debug("{$this->message}");# SE VE EL LOG DE LA ACTIVIDAD
+        // Log::debug("User: {$this->user->name} => Message: {$this->message}");
+        // Log::debug("User: {$this->user->name} => Message: {$this->message}");
+        // return new Channel('chat'); // Evento Público
+        return new PrivateChannel("chat.greet.{$this->user->id}"); // EVENTO PRIVADO
+        // return new PresenceChannel('chat'); // EVENTO DE PRESENCIA
+
+    }
+}
